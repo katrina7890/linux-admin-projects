@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# File Monitoring Script using auditd
+
+read -p "Enter full path of file to monitor: " filepath
+
+if [ ! -f "$filepath" ]; then
+    echo "File does not exist."
+    exit 1
+fi
+
+echo "Adding audit rule for $filepath..."
+
+sudo auditctl -w $filepath -p war -k file_monitor
+
+echo "Monitoring enabled."
+echo "To view logs, run:"
+echo "sudo ausearch -k file_monitor"
